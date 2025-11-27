@@ -10,10 +10,8 @@ import {
   X,
   BarChart3,
   Globe,
+  Handshake,
 } from 'lucide-react';
-
-// Paste your Isometric SVG components (unchanged except className props)
-// For brevity I'm reusing the same SVGs you provided with minor classname prop usage.
 
 const IsometricBSE = ({ className }) => (
   <svg viewBox="0 0 200 200" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,48 +58,9 @@ const IsometricMutualFund = ({ className }) => (
 
 export default function InvestmentApp() {
   const [hoveredBuilding, setHoveredBuilding] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  
   return (
     <div className="app-root">
-      <nav className="nav">
-        <div className="nav-inner container">
-          <div className="brand">
-            <img src={image} width="150px" />
-          </div>
-
-          <div className="nav-links" aria-hidden={mobileMenuOpen ? 'false' : 'true'}>
-            {['Markets', 'Mutual Funds', 'Analytics', 'Learn'].map(item => (
-              <a key={item} href="#" className="nav-link">{item}</a>
-            ))}
-          </div>
-
-          <div className="nav-actions">
-            <button className="nav-login">Log in</button>
-            <button className="primary-btn">Sign in</button>
-          </div>
-
-          <div className="nav-mobile-toggle">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
-              {mobileMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="mobile-menu">
-            <div className="mobile-links">
-              {['Markets', 'Mutual Funds', 'Analytics', 'Learn'].map(item => (
-                <a key={item} href="#" className="mobile-link">{item}</a>
-              ))}
-              <hr />
-              <button className="mobile-login">Log in</button>
-              <button className="mobile-cta">Sign in</button>
-            </div>
-          </div>
-        )}
-      </nav>
-
       <main className="hero container">
         <section className="hero-left">
           <div className="pill"> <span className="pulse-dot" /> Live Market Updates</div>
@@ -111,9 +70,7 @@ export default function InvestmentApp() {
             <br />
             <span className="gradient-text">simplified.</span>
           </h1>
-
-          <p className="hero-sub">Connect directly to BSE &amp; NSE. Manage your mutual funds, stocks, and portfolio in one beautifully designed, secure ecosystem.</p>
-
+          <p className="hero-sub">We help you invest in the right stocks and mutual funds—backed by research &amp; expertise</p>
           <div className="hero-cta-row">
             <button className="cta-primary">
               Start Investing <ArrowRight className="icon-inline" />
@@ -208,19 +165,19 @@ export default function InvestmentApp() {
           <div className="feature-card">
             <div className="feature-icon"><BarChart3 /></div>
             <h3>Advanced Analytics</h3>
-            <p>Deep dive into your portfolio performance with real-time charts and AI-driven insights.</p>
+            <p>Data, research, and strategy—built into every decision</p>
           </div>
 
           <div className="feature-card">
             <div className="feature-icon feature-icon-emerald"><PieChart /></div>
             <h3>Smart Mutual Funds</h3>
-            <p>Choose from over 5000+ direct mutual funds with 0% commission and hidden fees.</p>
+            <p>We help you invest in high-quality mutual funds for long-term wealth.</p>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon feature-icon-purple"><Globe /></div>
+            <div className="feature-icon feature-icon-purple"><Handshake /></div>
             <h3>Global Investing</h3>
-            <p>Invest in US stocks easily from India. Own a piece of the world's biggest companies.</p>
+            <p>Client-funded portfolios managed for consistent returns.</p>
           </div>
         </div>
       </section>

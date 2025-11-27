@@ -163,3 +163,133 @@ body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe
 
 /* small helpers */
 .icon-inline{width:18px;height:18px;vertical-align:middle}
+
+
+.app-root.blurred > *:not(.modal-backdrop) {
+  filter: blur(6px) saturate(0.9);
+  transform: scale(0.998);
+  transition: filter 180ms ease, transform 180ms ease;
+  pointer-events: none; /* prevent interactions with background while modal open */
+  user-select: none;
+}
+
+/* ---------- modal backdrop & card ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  /* dark translucent overlay */
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px); /* adds subtle blur to overlay itself */
+  animation: fadeIn 180ms ease;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* card */
+.modal-card {
+  width: 520px;
+  max-width: calc(100% - 40px);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  padding: 26px 28px 20px;
+  position: relative;
+  text-align: center;
+  animation: popIn 200ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* close button */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+}
+
+/* header */
+.modal-brand { margin-top: 6px; margin-bottom: 6px; }
+.modal-title {
+  margin: 6px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+}
+.modal-sub {
+  margin: 6px 0 18px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* form layout */
+.modal-form { display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f6f6f8;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.country-code {
+  padding: 6px 8px;
+  background: #ececec;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+}
+
+.phone-input {
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: transparent;
+  flex: 1;
+  padding: 6px;
+}
+
+/* continue button */
+.modal-continue {
+  border: none;
+  background: #7c7ff0;
+  color: white;
+  font-weight: 700;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 4px;
+  box-shadow: 0 6px 18px rgba(124,127,240,0.24);
+}
+
+/* terms text */
+.modal-terms {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #8a8a8a;
+}
+
+/* animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { transform: translateY(10px) scale(.995); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* small screens */
+@media (max-width: 520px) {
+  .modal-card { width: 100%; padding: 18px; border-radius: 10px; }
+  .modal-close { top: 8px; left: 8px; }
+}
