@@ -293,3 +293,259 @@ body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe
   .modal-card { width: 100%; padding: 18px; border-radius: 10px; }
   .modal-close { top: 8px; left: 8px; }
 }
+
+/* login page  */
+/* -------------------------
+   Responsive Login / Modal
+   ------------------------- */
+
+/* Modal overlay (centers content, safe padding on small screens) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  padding: 20px;               /* ensures space on small screens */
+  box-sizing: border-box;
+  animation: fadeIn 180ms ease;
+}
+
+/* Login card (desktop default) */
+.login-card {
+  width: 420px;
+  max-width: 100%;
+  background: #fff;
+  padding: 28px;
+  border-radius: 14px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  animation: popup 200ms cubic-bezier(.2,.9,.2,1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Small elevation and scale for focus/appearance */
+@keyframes popup {
+  from { transform: translateY(8px) scale(.995); opacity: 0; }
+  to   { transform: translateY(0) scale(1);     opacity: 1; }
+}
+
+/* Close button (larger target on mobile) */
+.close-btn {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Branding & headings */
+.login-card .login-brand {
+  width: 72px;
+  height: auto;
+  margin: 4px auto 2px;
+  display: block;
+}
+.login-card .login-title {
+  margin: 2px 0 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+}
+.login-card .login-sub {
+  margin: 4px 0 12px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Phone input row */
+.phone-input-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.country-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 62px;
+  padding: 10px 12px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #111827;
+  border: 1px solid #e6e6e6;
+}
+
+.login-input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+}
+
+/* larger focus ring for accessibility */
+.login-input:focus,
+.country-code:focus {
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+  border-color: rgba(59,130,246,0.6);
+}
+
+/* Continue button - big touch target */
+.continue-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  background: #111827;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* disabled state helper (if you later add validation) */
+.continue-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Terms */
+.terms {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.2;
+}
+.terms a {
+  color: #111827;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* subtle overlay fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* -------------------------
+   Responsive breakpoints
+   ------------------------- */
+
+/* Tablet-ish: make card slightly narrower */
+@media (max-width: 720px) {
+  .login-card {
+    width: 92%;
+    padding: 22px;
+    border-radius: 12px;
+    gap: 10px;
+  }
+  .country-code { min-width: 56px; padding: 10px; font-size: 14px; }
+  .login-input { padding: 12px; font-size: 15px; }
+  .continue-btn { padding: 13px; font-size: 15px; }
+}
+
+/* Mobile: full-width comfortable card with edge-safe padding */
+@media (max-width: 420px) {
+  .modal-overlay { align-items: flex-end; padding: 12px; } 
+  /* align to bottom like many mobile modals — feels natural for one-handed use */
+  .login-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 12px 12px 6px 6px; /* slightly different radius when attached to bottom */
+    margin: 0;
+    box-shadow: 0 -6px 30px rgba(0,0,0,0.18);
+    transform-origin: bottom center;
+  }
+  .close-btn { left: 10px; top: 10px; padding: 6px; }
+  .login-brand { width: 56px; }
+  .login-title { font-size: 18px; }
+  .login-sub { font-size: 13px; }
+  .country-code { min-width: 54px; padding: 10px; font-size: 14px; }
+  .phone-input-wrap { gap: 6px; }
+  .continue-btn { padding: 14px; font-size: 16px; border-radius: 10px; }
+  .terms { font-size: 12px; text-align: center; }
+}
+
+/* Very small devices: stack country-code above input if horizontal space is tight */
+@media (max-width: 340px) {
+  .phone-input-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .country-code {
+    width: 100%;
+    text-align: left;
+    padding-left: 12px;
+  }
+  .login-input { width: 100%; }
+}
+
+/* Ensure overlay and card stay above blurred content */
+.modal-overlay,
+.login-card {
+  z-index: 9999;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* button designing */
+/* From Uiverse.io by CristianMontoya98 */ 
+.classic-btn {
+ width: 4.8em;
+ height: 1.8em;
+ margin: 0.5em;
+ background: black;
+ color: rgb(227, 212, 212);
+ border: none;
+ border-radius: 0.625em;
+ font-size: 18px;
+ font-weight: bold;
+ cursor: pointer;
+ position: relative;
+ z-index: 1;
+ overflow: hidden;
+}
+
+.classic-btn:hover {
+ color: black;
+}
+
+.classic-btn:after {
+ content: "";
+ background: white;
+ position: absolute;
+ z-index: -1;
+ left: -20%;
+ right: -20%;
+ top: 0;
+ bottom: 0;
+ transform: skewX(-45deg) scale(0, 1);
+ transition: all 0.5s;
+}
+
+.classic-btn:hover:after {
+ transform: skewX(-45deg) scale(1, 1);
+ -webkit-transition: all 0.5s;
+ transition: all 0.5s;
+}
