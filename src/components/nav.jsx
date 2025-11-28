@@ -61,21 +61,38 @@ export default function NavBart() {
               <X size={20} />
             </button>
 
-            <img src={image} alt="brand" className="login-brand" />
+            <img src={image} alt="brand" className="login-brand" width="100"/>
 
-            <h2 className="login-title">India's last minute app</h2>
+            <h2 className="login-title">Your Money, Professionally Managed.</h2>
             <p className="login-sub">Log in or Sign up</p>
 
             <div className="phone-input-wrap">
-              <span className="country-code">+91</span>
+              {/* <span className="country-code">+91</span> */}
               <input
-                type="tel"
-                inputMode="numeric"
-                placeholder="Enter mobile number"
-                className="login-input"
-              />
+              type="text"
+              placeholder="Enter your name"
+              className="login-input"
+            />
+            
+            </div>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="login-input"
+            />
+            <div className="or">
+                <p className="or-text">Or</p>
             </div>
 
+            <div class="log-center">
+            <a href="http://localhost:4000/auth/google">
+            
+              <button className="google-btn"><img
+                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                alt="Google"
+                className="google-logo"/>Sign in with Google</button>
+            </a>
+            </div>
             <button className="continue-btn">Continue</button>
 
             <p className="terms">

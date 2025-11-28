@@ -549,3 +549,56 @@ body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe
  -webkit-transition: all 0.5s;
  transition: all 0.5s;
 }
+
+/* google login button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 80px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
+}
+
+.google-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+}
+a{
+  text-decoration: none;
+}
+
+.or{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.log-center{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.or-text{
+  font-family: "TikTok Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 112.5;
+  font-size:18px ;
+}
