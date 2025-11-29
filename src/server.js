@@ -101,7 +101,7 @@ app.get("/auth/google/callback",
   (req, res) => {
     // Successful authentication.
     // You can redirect to frontend route. The session cookie is set.
-    const redirectTo = `${process.env.API_URL}/congrats`;
+    const redirectTo = `${process.env.API_URL}`;
     res.redirect(redirectTo);
   }
 );
