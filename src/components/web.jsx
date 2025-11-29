@@ -154,14 +154,14 @@ export default function InvestmentApp() {
           </div>
         </section>
       </main>
-
+      
       <section className="features container">
         <div className="features-head">
           <h2>One platform. Limitless possibilities.</h2>
           <p>Everything you need to manage your wealth.</p>
         </div>
 
-        <div className="features-grid">
+        <section className="features-grid">
           <div className="feature-card">
             <div className="feature-icon"><BarChart3 /></div>
             <h3>Advanced Analytics</h3>
@@ -179,18 +179,8 @@ export default function InvestmentApp() {
             <h3>Global Investing</h3>
             <p>Client-funded portfolios managed for consistent returns.</p>
           </div>
-        </div>
+        </section>
       </section>
-
-      <footer className="site-footer">
-        <div className="footer-inner container">
-          <div className="footer-brand">
-            <img src={image} width="150px" height="140px"/>
-          </div>
-
-          <div className="copyright">© 2025 Ascend Technologies Pvt Ltd. All rights reserved.</div>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -7,6 +7,8 @@
   --muted: #6b7280;
   --card-bg: #ffffff;
   --soft: #f8fafc;
+  --distance: 100%;   /* how far to move to the right (can be px or % ) */
+  --duration: 3s; 
 }
 
 *{box-sizing:border-box}
@@ -601,4 +603,71 @@ a{
     "slnt" 0,
     "wdth" 112.5;
   font-size:18px ;
+}
+
+/* moving images */
+/* The visible area */
+.slider {
+  width: 100%;
+  overflow: hidden;
+  
+}
+
+/* Track that moves left */
+.slider-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 8s linear infinite;
+ 
+}
+
+/* The images themselves */
+.moving-image {
+  height: 100px;   /* adjust if needed */
+  width: auto;
+  display: block;
+  margin: 0;       /* IMPORTANT: no space between images */
+  padding: 0;
+}
+
+/* Seamless scroll */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* moving right */
+.slider1 {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* The track that moves right */
+.slider-track-right {
+  display: flex;
+  width: max-content;
+  animation: scroll-right 8s linear infinite;
+}
+
+/* The images */
+.moving-image-right {
+  height: 100px;  /* adjust as needed */
+  width: auto;
+  display: block;
+  margin: 0;       /* IMPORTANT: no gaps */
+  padding: 0;
+}
+
+/* Seamless scroll from left -> right */
+@keyframes scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
