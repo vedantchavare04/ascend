@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { StockContext } from "./stockcontext";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default function StockProvider({ children }) {
   const [stocks, setStocks] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_KEY = "873MIO4DBT9INXVX";
+  const API_KEY =process.env.API_KEY;
   const API_URL = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${API_KEY}`;
 
   useEffect(() => {
