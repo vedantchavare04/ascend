@@ -341,7 +341,7 @@ body {
   min-height: 400px;
   position: relative;
   margin-right: 50px;
-  clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%); 
+  clip-path: quadrilateral(0 0, 100% 0, 80% 100%, 0% 100%); 
 }
 
 .GrowthChartBackground {
@@ -356,11 +356,11 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 120%;
+  width: 100%;
   height: 10px;
   background: var(--color-success);
   opacity: 0.7;
-  clip-path: polygon(0% 100%, 100% 80%, 100% 100%, 0% 100%);
+  clip-path: quadrilateral(0% 100%, 100% 80%, 100% 100%, 0% 100%);
   animation: risingLine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
@@ -502,4 +502,10 @@ body {
       transform: none; 
       box-shadow: none;
   }
+}
+
+.Beni_image {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px; /* match your card’s corners */
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './component.css';
+import Beni_img from "../components/benefits.jpg";
 
 const BenefitItem = ({ icon, text }) => (
   <div className="BenefitItem">
@@ -23,9 +24,7 @@ const Benefits = () => {
       <div className="GrowthVisual">
         <div className="GrowthChartBackground">
           {/* A simple rising wave/chart simulation */}
-        </div>
-        <div className="GrowthChartLine">
-          {/* Animated line depicting rising growth */}
+          <img src={Beni_img} className="Beni_image" />
         </div>
       </div>
 
