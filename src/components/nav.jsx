@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import image from "../components/ascend.png";
 import './web.css';
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 export default function NavBart() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-
+  const navigate=useNavigate();
+  
   return (
     <div className="app-root">
       {/* main content that will be blurred when modal opens */}
@@ -18,9 +20,10 @@ export default function NavBart() {
             </div>
 
             <div className="nav-links" aria-hidden={mobileMenuOpen ? 'false' : 'true'}>
-              {['Markets', 'Mutual Funds', 'Analytics', 'Learn'].map(item => (
-                <a key={item} href="#" className="nav-link">{item}</a>
-              ))}
+              <a href="#" className="nav-link">Markets</a>
+              <a href="#" className="nav-link">Mutual Funds</a>
+              <a onClick={()=>navigate("/news")} className="nav-link">News</a>
+              <a href="#" className="nav-link">Learn</a>
             </div>
 
             <div className="nav-actions">
@@ -41,9 +44,10 @@ export default function NavBart() {
           {mobileMenuOpen && (
             <div className="mobile-menu">
               <div className="mobile-links">
-                {['Markets', 'Mutual Funds', 'Analytics', 'Learn'].map(item => (
-                  <a key={item} href="#" className="mobile-link">{item}</a>
-                ))}
+                <a href="#" className="nav-link">Markets</a>
+                <a href="#" className="nav-link">Mutual Funds</a>
+                <a onClick={()=>navigate("/news")} className="nav-link">News</a>
+                <a href="#" className="nav-link">Learn</a>
                 <hr />
                 <button className="mobile-login" onClick={() => { setShowLogin(true); setMobileMenuOpen(false); }}>
                   Log in

@@ -1,4 +1,3 @@
-// server.js (ES modules)
 import dotenv from "dotenv";
 dotenv.config();
 
