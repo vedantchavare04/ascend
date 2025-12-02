@@ -7,6 +7,7 @@ import ImageMoveRight from './poster2.jsx';
 import { Routes, Route } from "react-router-dom";
 import News from './news.jsx';
 import StockProvider from '../config/stockstate.js';
+import Benefit from './benefits.jsx';
 
 export default function Web(){
     return (
@@ -16,6 +17,7 @@ export default function Web(){
         <InvestmentApp />
         <ImageMoveLeft />
         <ImageMoveRight />
+        <Benefit />
         <Footer />
          </div>} />
 

@@ -295,3 +295,211 @@ body {
     left: calc(100% - 3rem);
   }
 }
+
+/* benefits */
+/* ======================== 1. BASE & UTILITIES ======================== */
+:root {
+  --color-success: #10b981; 
+  --color-accent: #2563eb; 
+  --color-background-light: #f9fafb;
+  --color-text-dark: #1f2937;
+  --color-text-subtle: #6b7280;
+  --color-shadow-light: rgba(16, 185, 129, 0.4); 
+}
+
+.GrowthBenefitsContainer {
+  display: flex;
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 40px 20px;
+  background-color: white;
+  border-radius: 12px;
+  /* Initial subtle 3D shadow */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); 
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px; 
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+/* 3D Tilt Effect on Container Hover */
+.GrowthBenefitsContainer:hover {
+    transform: rotateX(1deg) rotateY(-1deg) scale(1.01);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.ContentWrapper {
+  flex: 1;
+  padding-left: 50px;
+  z-index: 2;
+}
+
+/* ======================== 2. VISUAL METAPHOR (GROWTH/TRUST) ======================== */
+
+.GrowthVisual {
+  width: 45%;
+  min-height: 400px;
+  position: relative;
+  margin-right: 50px;
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%); 
+}
+
+.GrowthChartBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e0f2f1 0%, #d1e5f4 100%); 
+  border-radius: 10px;
+}
+
+.GrowthChartLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120%;
+  height: 10px;
+  background: var(--color-success);
+  opacity: 0.7;
+  clip-path: polygon(0% 100%, 100% 80%, 100% 100%, 0% 100%);
+  animation: risingLine 4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+/* Enhanced Animation Keyframes */
+@keyframes risingLine {
+  from {
+    transform: translateY(0);
+    clip-path: polygon(0% 100%, 100% 90%, 100% 100%, 0% 100%);
+  }
+  to {
+    transform: translateY(-20px); 
+    clip-path: polygon(0% 100%, 100% 50%, 100% 100%, 0% 100%);
+  }
+}
+
+/* ======================== 3. FEATURE STYLING AND ANIMATION ======================== */
+
+/* Benefit Item Hover Effect (3D Pop-out) */
+.BenefitsList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.BenefitItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.BenefitItem:hover {
+    transform: translateY(-3px) scale(1.02); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+    background-color: #f0fff4; 
+}
+
+/* Call to Action Button */
+.CTAButton {
+    display: inline-block;
+    padding: 15px 30px;
+    margin-top: 30px;
+    background-color: var(--color-success);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--color-shadow-light);
+}
+
+.CTAButton:hover {
+    background-color: #0b9e75; 
+    transform: translateY(-4px); 
+    box-shadow: 0 8px 25px var(--color-shadow-light); 
+}
+
+/* Testimonial/Quote */
+.Testimonial {
+    margin-top: 40px;
+    padding: 20px;
+    border-left: 4px solid var(--color-accent);
+    background-color: #f7f9fd; 
+    border-radius: 4px;
+}
+
+.Testimonial blockquote {
+    font-size: 16px;
+    font-style: italic;
+    color: var(--color-text-dark);
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+}
+
+.Testimonial__author {
+    font-size: 14px;
+    color: var(--color-text-subtle);
+    text-align: right;
+    margin: 0;
+}
+
+/* Existing Content Styles */
+.Preamble__link { color: var(--color-accent); font-size: 14px; font-weight: 600; letter-spacing: 1px; }
+.Preamble__title { font-size: 40px; font-weight: 800; color: var(--color-text-dark); margin: 10px 0 20px 0; }
+.Preamble__description { color: var(--color-text-subtle); line-height: 1.6; margin-bottom: 30px; }
+.BenefitItem__icon { font-size: 20px; color: var(--color-success); }
+.BenefitItem__text { font-size: 16px; color: var(--color-text-dark); margin: 0; }
+
+
+/* ======================== 4. MOBILE RESPONSIVENESS ======================== */
+
+@media (max-width: 768px) {
+  /* Disable 3D tilt and reset layout */
+  .GrowthBenefitsContainer {
+    flex-direction: column;
+    padding: 30px 20px;
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
+  }
+  .GrowthBenefitsContainer:hover {
+    transform: none;
+  }
+  
+  /* Visual Resizing */
+  .GrowthVisual {
+    width: 100%;
+    height: 200px;
+    margin: 0 0 30px 0;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+  }
+
+  .ContentWrapper {
+    padding-left: 0;
+  }
+
+  .Preamble__title {
+    font-size: 32px;
+  }
+
+  .BenefitsList {
+    grid-template-columns: 1fr;
+  }
+  
+  .CTAButton {
+      width: 100%;
+      text-align: center;
+      padding: 15px 0;
+  }
+  
+  .Testimonial {
+      margin-top: 30px;
+  }
+  
+  .BenefitItem:hover {
+      /* Keep the slight background change but remove the vertical lift on mobile */
+      transform: none; 
+      box-shadow: none;
+  }
+}
