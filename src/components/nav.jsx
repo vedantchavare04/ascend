@@ -47,7 +47,7 @@ export default function NavBart() {
                 <a onClick={()=>navigate("/market")} className="nav-link">Markets</a>
                 <a onClick={()=>navigate("/funds")} className="nav-link">Mutual Funds</a>
                 <a onClick={()=>navigate("/news")} className="nav-link">News</a>
-                <a href="#" className="nav-link">Learn</a>
+                <a onClick={()=>navigate("/learn")} className="nav-link">Learn</a>
                 <hr />
                 <button className="mobile-login" onClick={() => { setShowLogin(true); setMobileMenuOpen(false); }}>
                   Log in
