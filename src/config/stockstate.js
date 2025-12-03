@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { StockContext } from "./stockcontext";
+import { StockContext } from "./stockcontext.js";
 
 export default function StockProvider({ children }) {
   const [stocks, setStocks] = useState(null);

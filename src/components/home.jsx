@@ -8,6 +8,8 @@ import { Routes, Route } from "react-router-dom";
 import News from './news.jsx';
 import StockProvider from '../config/stockstate.js';
 import Benefit from './benefits.jsx';
+import Mutual from './mutual.jsx';
+import FundProvider from '../config/fundState.js';
 
 export default function Web(){
     return (
@@ -25,6 +27,13 @@ export default function Web(){
              <StockProvider>
             <News />
             </StockProvider>
+        </div>
+        } />
+
+        <Route exact path="/funds" element={<div>
+            <FundProvider>
+            <Mutual />
+            </FundProvider>
         </div>
         } />
     </Routes>

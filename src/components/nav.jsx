@@ -21,7 +21,7 @@ export default function NavBart() {
 
             <div className="nav-links" aria-hidden={mobileMenuOpen ? 'false' : 'true'}>
               <a href="#" className="nav-link">Markets</a>
-              <a href="#" className="nav-link">Mutual Funds</a>
+              <a onClick={()=>navigate("/funds")}className="nav-link">Mutual Funds</a>
               <a onClick={()=>navigate("/news")} className="nav-link">News</a>
               <a href="#" className="nav-link">Learn</a>
             </div>
