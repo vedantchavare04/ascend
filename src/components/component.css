@@ -520,25 +520,31 @@ body {
   --accent: #00c196;
   --accent-dark: #019873;
   --text-main: #1f2933;
+  --text-muted: #6b7280;
   --border-soft: #e5e7eb;
   --radius-lg: 14px;
-  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.06);
-  --shadow-hover: 0 18px 45px rgba(15, 23, 42, 0.12);
+  --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.06);
+  --shadow-hover: 0 18px 40px rgba(15, 23, 42, 0.12);
   --transition-fast: 0.18s ease-out;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
 }
 
-body {
-  margin: 0;
+/* Loading / empty states */
+.loading {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
+/* Page wrapper */
 .amc-page {
   min-height: 100vh;
   background: radial-gradient(circle at top left, #e5f6ff, var(--bg));
   display: flex;
   justify-content: center;
-  padding: 2.5rem 1.5rem;
+  padding: 1.8rem 1rem;
 }
 
 .amc-container {
@@ -546,37 +552,43 @@ body {
   max-width: 1100px;
 }
 
+/* Title */
 .amc-title {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.2rem;
   color: var(--text-main);
 }
 
-/* Grid */
-
+/* Grid (mobile-first) */
+/* Phones: 1 column */
 .amc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 5rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
-/* Cards */
+/* Card link wrapper */
+.amc-grid a {
+  text-decoration: none;
+  color: inherit;
+}
 
+/* Individual card */
 .amc-card {
   background: var(--card-bg);
   border-radius: var(--radius-lg);
-  padding: 1.3rem 1.1rem;
+  padding: 1rem;
   border: 1px solid var(--border-soft);
   box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.75rem;
+  width:200px;
+  cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast),
     border-color var(--transition-fast), background var(--transition-fast);
-  cursor: pointer;
-  width:300px;
 }
 
 .amc-card:hover {
@@ -586,61 +598,507 @@ body {
   background: linear-gradient(145deg, #ffffff, #f9fffd);
 }
 
-.amc-logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  background: radial-gradient(circle at 20% 0, #4ade80, #22c55e);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: white;
-  font-size: 1rem;
-  text-transform: uppercase;
+/* Fund image */
+.card_photo {
+  width: 90%;
+  border-radius: 12px;
+  background-color: #e5e7eb;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* Keeps a nice ratio on all screens */
+  aspect-ratio: 3 / 2;
 }
 
+/* Fund name */
 .amc-name {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   text-align: center;
   font-weight: 600;
   color: #111827;
+  word-break: break-word;
 }
 
-/* Responsive */
+/* --------- Responsive breakpoints --------- */
 
-@media (max-width: 600px) {
+/* Small phones: slightly tighter spacing */
+@media (max-width: 550px) {
+  .amc-grid{
+    margin-left: 30%;
+  }
+
   .amc-page {
-    padding: 1.8rem 1rem;
+    padding-inline: 0.75rem;
   }
 
   .amc-title {
-    font-size: 1.5rem;
-    text-align: left;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: var(--text-main);
+    font-size: 1.25rem;
   }
 
-  .amc-grid {
-    grid-template-columns: 1fr;
+  .amc-card {
+    padding: 2rem;
+  }
+
+  .amc-name {
+    font-size: 0.85rem;
   }
 }
 
-.card_photo {
-  box-sizing: border-box;
-  width: 100px;
-  height: 100px;
-  background: rgba(217, 217, 217, 0.58);
-  border: 1px solid white;
-  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(6px);
-  border-radius: 17px;
+/* Tablets: 2 columns */
+@media (min-width: 600px) {
+  .amc-page {
+    padding: 2.2rem 1.5rem;
+  }
+
+  .amc-title {
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-bottom: 25px;
+  color: #6d6b6a;
+  /* Optional: Add a subtle gradient effect for premium feel */
+  background: linear-gradient(45deg, #6d6b6a, #a0a0a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    margin-bottom: 1.4rem;
+  }
+
+  .amc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.3rem;
+  }
+}
+
+/* Small desktop: 3 columns */
+@media (min-width: 900px) {
+  .amc-page {
+    padding: 2.5rem 2rem;
+  }
+
+  .amc-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Large desktop: 4 columns */
+@media (min-width: 1200px) {
+  .amc-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .amc-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* market jsx */
+/* --- StockStatus.css (UPDATED for Mobile Responsiveness) --- */
+
+/* Main container styling */
+.stock-status-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
-  cursor: pointer;
-  transition: all 0.5s;
+  box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+/* Icon Section Styling (unchanged for desktop/mobile) */
+.status-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.chart-icon {
+  font-size: 5rem;
+  color: #3f51b5; 
+}
+
+.pause-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #ff9800;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Content Styling (desktop default) */
+.status-heading {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.status-message {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.status-update {
+    font-size: 0.95rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.bold-highlight {
+    font-weight: 700;
+    color: #222;
+}
+
+/* Footer/Status Bar */
+.status-footer {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 15px;
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.temporary-label {
+  display: inline-block;
+  background-color: #fff3e0;
+  color: #e65100;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  margin-left: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Optional: Subtle Hover Effect (desktop only) */
+.stock-status-container:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+/* --- MOBILE RESPONSIVENESS (Max Width 576px) --- */
+@media (max-width: 576px) {
+  .stock-status-container {
+    margin: 20px; /* Less margin on small screens */
+    padding: 20px; /* Reduced padding */
+    border-radius: 8px; /* Slightly smaller border radius */
+  }
+
+  /* Reduce Icon Size */
+  .chart-icon {
+    font-size: 4rem;
+  }
+
+  .pause-icon {
+    font-size: 2.5rem;
+  }
+
+  /* Adjust Text Sizes for readability */
+  .status-heading {
+    font-size: 1.5rem;
+  }
+
+  .status-message {
+    font-size: 1rem;
+  }
+  
+  .status-update {
+    font-size: 0.9rem;
+  }
+
+  /* Make the label stack better on small screens */
+  .status-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .temporary-label {
+    margin-left: 0; /* Remove left margin */
+    margin-top: 8px; /* Add space above the label */
+    font-size: 0.8rem;
+  }
+  
+  /* Remove hover effect on touch devices */
+  .stock-status-container:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Reset shadow */
+  }
+}
+
+/* learn */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --ascend-bg: #050816;
+  --ascend-bg-soft: #0b1020;
+  --ascend-card: #0f172a;
+  --ascend-card-soft: #111827;
+  --ascend-accent: #38bdf8;
+  --ascend-accent-soft: rgba(56, 189, 248, 0.18);
+  --ascend-accent-2: #a855f7;
+  --ascend-text-main: #e5e7eb;
+  --ascend-text-muted: #9ca3af;
+  --ascend-border: rgba(148, 163, 184, 0.35);
+  --ascend-radius-lg: 18px;
+  --ascend-radius-pill: 999px;
+  --ascend-shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.6);
+  --ascend-shadow-hover: 0 25px 65px rgba(15, 23, 42, 0.85);
+  --ascend-transition: 0.18s ease-out;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Page wrapper */
+
+.ascend-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617);
+  padding: 2.2rem 1.25rem 3rem;
+  display: flex;
+  justify-content: center;
+  color: var(--ascend-text-main);
+}
+
+.ascend-container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Header */
+
+.ascend-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.ascend-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.6rem;
+  background: linear-gradient(120deg, #f9fafb, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ascend-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ascend-text-muted);
+  max-width: 520px;
+}
+
+.ascend-subtitle span {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+/* Sections */
+
+.ascend-section {
+  margin-bottom: 2.4rem;
+}
+
+.section-heading {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ascend-text-muted);
+  margin-bottom: 1.1rem;
+}
+
+/* Steps */
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Card base styles */
+
+.step-card,
+.rule-card {
+  position: relative;
+  background: radial-gradient(circle at top left, #1e293b, var(--ascend-card));
+  border-radius: var(--ascend-radius-lg);
+  border: 1px solid var(--ascend-border);
+  padding: 1.1rem 1rem 1rem;
+  box-shadow: var(--ascend-shadow-soft);
+  overflow: hidden;
+  transition: transform var(--ascend-transition),
+    box-shadow var(--ascend-transition), border-color var(--ascend-transition),
+    background var(--ascend-transition), translate var(--ascend-transition);
+}
+
+/* Soft glow */
+
+.step-card::before,
+.rule-card::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  opacity: 0;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.25), transparent 55%);
+  transition: opacity var(--ascend-transition);
+  pointer-events: none;
+}
+
+.step-card:hover::before,
+.rule-card:hover::before {
+  opacity: 1;
+}
+
+.step-card:hover,
+.rule-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ascend-shadow-hover);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+/* Step badge */
+
+.step-badge {
+  position: relative;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--ascend-radius-pill);
+  background: radial-gradient(circle at 30% 0, #38bdf8, #0ea5e9);
   display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
-  font-weight: bolder;
-  color: black;
-  margin:1%;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0b1120;
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.7);
+  margin-bottom: 0.6rem;
+}
+
+/* Text inside cards */
+
+.step-title,
+.rule-title {
+  position: relative;
+  z-index: 1;
+  font-size: 1rem;
+  margin: 0 0 0.3rem;
+}
+
+.step-text,
+.rule-text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ascend-text-muted);
+  line-height: 1.6;
+}
+
+.step-text strong,
+.rule-text strong {
+  color: #e5e7eb;
+}
+
+/* Rules */
+
+.rules-section {
+  margin-top: 0.5rem;
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Small phones */
+
+@media (max-width: 380px) {
+  .ascend-page {
+    padding-inline: 0.85rem;
+  }
+
+  .ascend-title {
+    font-size: 1.6rem;
+  }
+
+  .ascend-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablets: 2 columns for steps & rules */
+
+@media (min-width: 640px) {
+  .ascend-page {
+    padding: 2.6rem 1.8rem 3.2rem;
+  }
+
+  .ascend-title {
+    font-size: 2.1rem;
+  }
+
+  .ascend-subtitle {
+    font-size: 1rem;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.3rem;
+  }
+
+  .rules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.3rem;
+  }
+}
+
+/* Small desktop */
+
+@media (min-width: 900px) {
+  .ascend-page {
+    padding: 3rem 2.2rem 3.5rem;
+  }
+
+  .ascend-title {
+    font-size: 2.3rem;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rules-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Large desktop */
+
+@media (min-width: 1200px) {
+  .ascend-title {
+    font-size: 2.5rem;
+  }
 }

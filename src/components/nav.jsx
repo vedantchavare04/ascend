@@ -20,10 +20,10 @@ export default function NavBart() {
             </div>
 
             <div className="nav-links" aria-hidden={mobileMenuOpen ? 'false' : 'true'}>
-              <a href="#" className="nav-link">Markets</a>
-              <a onClick={()=>navigate("/funds")}className="nav-link">Mutual Funds</a>
+              <a onClick={()=>navigate("/market")} className="nav-link">Markets</a>
+              <a onClick={()=>navigate("/funds")} className="nav-link">Mutual Funds</a>
               <a onClick={()=>navigate("/news")} className="nav-link">News</a>
-              <a href="#" className="nav-link">Learn</a>
+              <a onClick={()=>navigate("/learn")} className="nav-link">Learn</a>
             </div>
 
             <div className="nav-actions">
@@ -44,8 +44,8 @@ export default function NavBart() {
           {mobileMenuOpen && (
             <div className="mobile-menu">
               <div className="mobile-links">
-                <a href="#" className="nav-link">Markets</a>
-                <a href="#" className="nav-link">Mutual Funds</a>
+                <a onClick={()=>navigate("/market")} className="nav-link">Markets</a>
+                <a onClick={()=>navigate("/funds")} className="nav-link">Mutual Funds</a>
                 <a onClick={()=>navigate("/news")} className="nav-link">News</a>
                 <a href="#" className="nav-link">Learn</a>
                 <hr />

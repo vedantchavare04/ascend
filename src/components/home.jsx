@@ -10,6 +10,8 @@ import StockProvider from '../config/stockstate.js';
 import Benefit from './benefits.jsx';
 import Mutual from './mutual.jsx';
 import FundProvider from '../config/fundState.js';
+import StockStatus from './market.jsx';
+import Learn from './learn.jsx';
 
 export default function Web(){
     return (
@@ -36,6 +38,17 @@ export default function Web(){
             </FundProvider>
         </div>
         } />
+
+        <Route exact path="/market" element={<div>
+            <StockStatus />
+        </div>
+        } />
+
+        <Route exact path="/learn" element={<div>
+            <Learn />
+        </div>
+        } />
+
     </Routes>
 )
 
