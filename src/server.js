@@ -102,9 +102,14 @@ passport.use(
           photos: profile.photos,
           provider: profile.provider,
         };
-
+        console.log(user)
         users.set(id, user);
+        const rows=await sql`
+        INSERT INTO users (username, email)
+        VALUES (${user.displayName }, ${ user.emails.map(e => e.value)[0]})
+        `;
         return done(null, user);
+        
       } catch (err) {
         return done(err);
       }
@@ -143,7 +148,7 @@ app.get(
     session: true,
   }),
   (req, res) => {
-    const redirectTo = `${process.env.API_URL}`;
+    const redirectTo = `${process.env.FRONT}`;
     res.redirect(redirectTo);
   }
 );

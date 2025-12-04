@@ -70,23 +70,6 @@ export default function NavBart() {
             <h2 className="login-title">Your Money, Professionally Managed.</h2>
             <p className="login-sub">Log in or Sign up</p>
 
-            <div className="phone-input-wrap">
-              {/* <span className="country-code">+91</span> */}
-              <input
-              type="text"
-              placeholder="Enter your name"
-              className="login-input"
-            />
-            
-            </div>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="login-input"
-            />
-            <div className="or">
-                <p className="or-text">Or</p>
-            </div>
 
             <div class="log-center">
             <a href="http://localhost:4000/auth/google">
