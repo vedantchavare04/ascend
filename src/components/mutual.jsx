@@ -5,7 +5,11 @@ import { FundContext } from "../config/fundContext.js";
 export default function Mutual() {
   const { funds, loading } = useContext(FundContext);
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return (
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  );
 
   if (!funds || funds.length === 0) {
     return (

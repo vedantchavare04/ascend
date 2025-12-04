@@ -7,7 +7,12 @@ import { useContext } from "react";
 export default function News() {
   const { stocks, loading } = useContext(StockContext);
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return (
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  )
+;
   if (!stocks || !stocks.feed) return <p className="no-news">No news found.</p>;
 
   // helper to parse time_published like: 20251202T165600
