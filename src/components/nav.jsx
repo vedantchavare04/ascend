@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import image from "../components/ascend.png";
 import './web.css';
 import { Menu, X } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../config/loginContext.js";
 
 export default function NavBart() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const { login, user } = useContext(LoginContext);
+
   const navigate=useNavigate();
   
   return (
@@ -26,9 +29,18 @@ export default function NavBart() {
               <a onClick={()=>navigate("/learn")} className="nav-link">Learn</a>
             </div>
 
+
+              {login === false && (
             <div className="nav-actions">
-              <button className="classic-btn" onClick={() => setShowLogin(true)}>Log in</button>
+              <button
+                className="classic-btn"
+                onClick={() => setShowLogin(true)}
+              >
+                Log in
+              </button>
             </div>
+          )}
+
 
             <div className="nav-mobile-toggle">
               <button

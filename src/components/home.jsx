@@ -12,17 +12,20 @@ import Mutual from './mutual.jsx';
 import FundProvider from '../config/fundState.js';
 import StockStatus from './market.jsx';
 import Learn from './learn.jsx';
+import Authenticate from '../config/loginState.js';
 
 export default function Web(){
     return (
     <Routes>
     <Route exact path="/" element={<div>
+        <Authenticate>
         <NavBart />
         <InvestmentApp />
         <ImageMoveLeft />
         <ImageMoveRight />
         <Benefit />
         <Footer />
+        </Authenticate>
          </div>} />
 
         <Route exact path="/news" element={<div>

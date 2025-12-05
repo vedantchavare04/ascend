@@ -13,17 +13,9 @@ export default function FundProvider({ children }) {
   const fetchFunds = async () => {
     try {
       setLoading(true);
-
       const response = await axios.get(BASE_URL);
-
-      // ✅ axios does NOT have .ok or .json()
-      //    Data is on response.data
       console.log("Response from /api/funds:", response.data);
 
-      // If your backend returns an array:
-      //   res.json(rows)
-      // then response.data is already an array.
-      // If it returns { funds: [...] }, handle that too:
       const data = Array.isArray(response.data)
         ? response.data
         : response.data.funds || [];
@@ -31,7 +23,7 @@ export default function FundProvider({ children }) {
       setFunds(data);
     } catch (err) {
       console.error("Error fetching funds:", err);
-      setFunds([]); // make sure it's at least an empty array
+      setFunds([]); 
     } finally {
       setLoading(false);
     }
