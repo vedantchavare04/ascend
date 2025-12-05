@@ -20,14 +20,19 @@ if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   console.error("Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET in .env");
   process.exit(1);
 }
+
+// -------- CORS middleware ----------
+
+// Allow both localhost:5173 (Vite) and localhost:3000 (CRA/Webpack)
 const allowedOrigins = [
-  CLIENT_ORIGIN,           
-  `http://localhost:${process.env.FRONT_PORT}`,  
+  CLIENT_ORIGIN,              // whatever is in API_URL
+  "http://localhost:3000",    // explicit React dev server
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow requests with no origin (e.g. Postman, curl)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
@@ -37,14 +42,14 @@ app.use(
         return callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, 
+    credentials: true, // required for cookies / sessions
   })
 );
 
 app.use(express.json());
 app.use(cookieParser());
 
-//session middleware (required by passport)
+// IMPORTANT: session middleware (required by passport)
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change_this_secret",
@@ -62,9 +67,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const users = new Map(); 
+// -------- passport config ----------
+// In-memory store for demo. Replace with DB lookups in production.
+const users = new Map(); // key: id, value: profile
 
 passport.serializeUser((user, done) => {
+  // store minimal identifier in session
   done(null, user.id);
 });
 
@@ -124,6 +132,8 @@ app.get("/api/funds", async (req, res) => {
   }
 });
 
+// -------- routes ----------
+
 // Start Google OAuth flow
 app.get(
   "/auth/google",
@@ -147,6 +157,7 @@ app.get("/auth/google/failure", (req, res) => {
   res.status(401).json({ ok: false, error: "Google authentication failed" });
 });
 
+// Optional route to get current user (requires session cookie)
 app.get("/api/me", (req, res) => {
   if (!req.user)
     return res.status(401).json({ ok: false, error: "Not authenticated" });
