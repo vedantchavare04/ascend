@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "./component.css";
 import { FundContext } from "../config/fundContext.js";
+import PayButton from "./payment.jsx";
 
 export default function Mutual() {
   const { funds, loading } = useContext(FundContext);
@@ -42,7 +43,6 @@ export default function Mutual() {
               fund_name || name || amc_name || scheme_name || "Unnamed Fund";
 
             return (
-                <a href="#">
               <article key={id || displayName} className="amc-card">
                 <div
                   className="card_photo"
@@ -53,8 +53,9 @@ export default function Mutual() {
                   }}
                 />
                 <h2 className="amc-name">{displayName}</h2>
+                  <PayButton/>
+              
               </article>
-              </a>
             );
           })}
         </div>

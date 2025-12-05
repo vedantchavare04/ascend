@@ -13,7 +13,7 @@ import FundProvider from '../config/fundState.js';
 import StockStatus from './market.jsx';
 import Learn from './learn.jsx';
 import Authenticate from '../config/loginState.js';
-
+import PaymentError from "./payerror.jsx";
 export default function Web(){
     return (
     <Routes>
@@ -49,6 +49,11 @@ export default function Web(){
 
         <Route exact path="/learn" element={<div>
             <Learn />
+        </div>
+        } />
+
+        <Route exact path="/pay" element={<div>
+            <PaymentError />
         </div>
         } />
 

@@ -1,0 +1,198 @@
+/* Variables for easy color adjustments */
+:root {
+  --pe-color-bg: #f9fafb;
+  --pe-color-card-bg: #ffffff;
+  --pe-color-primary: #111827;
+  --pe-color-primary-hover: #000000;
+  --pe-color-text-main: #1f2937;
+  --pe-color-text-sub: #4b5563;
+  --pe-color-border: #e5e7eb;
+  
+  /* Error specific colors (Soft Red) */
+  --pe-color-error-light: #fef2f2;
+  --pe-color-error-border: #fee2e2;
+  --pe-color-error-icon: #ef4444;
+}
+
+/* Container: Centers the card on screen */
+.pe-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pe-color-bg);
+  padding: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* The Main Card */
+.pe-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--pe-color-card-bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid var(--pe-color-border);
+}
+
+/* Header Section */
+.pe-header {
+  background-color: var(--pe-color-error-light);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid var(--pe-color-error-border);
+}
+
+/* Icon Styling */
+.pe-icon-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.pe-icon-bg {
+  position: relative;
+  background-color: var(--pe-color-card-bg);
+  padding: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 2;
+}
+
+.pe-icon-main {
+  color: var(--pe-color-error-icon);
+}
+
+/* Pulsing Animation behind icon */
+.pe-icon-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fca5a5;
+  border-radius: 50%;
+  z-index: 1;
+  animation: pe-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pe-ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Typography */
+.pe-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--pe-color-text-main);
+  margin: 0;
+}
+
+.pe-status {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pe-status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--pe-color-error-icon);
+  border-radius: 50%;
+}
+
+.pe-status-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #b91c1c;
+}
+
+/* Content Area */
+.pe-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.pe-message {
+  color: var(--pe-color-text-sub);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.pe-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pe-btn {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.pe-btn:active {
+  transform: scale(0.98);
+}
+
+.pe-btn-primary {
+  background-color: var(--pe-color-primary);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pe-btn-primary:hover {
+  background-color: var(--pe-color-primary-hover);
+  box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+}
+
+.pe-btn-secondary {
+  background-color: white;
+  color: var(--pe-color-text-main);
+  border: 1px solid var(--pe-color-border);
+}
+
+.pe-btn-secondary:hover {
+  background-color: #f9fafb;
+}
+
+/* Footer */
+.pe-footer {
+  background-color: #f9fafb;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid var(--pe-color-border);
+}
+
+.pe-support-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.pe-support-link:hover {
+  color: var(--pe-color-text-main);
+}
