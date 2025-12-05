@@ -4,7 +4,7 @@ import axios from "axios";
 import { FundContext } from "./fundContext.js";
 
 // In Vite, env vars are on import.meta.env, not process.env
-const BASE_URL = "http://localhost:4000/api/funds";
+const BASE_URL = `${process.env.VITE_API_URL}/api/funds`;
 
 export default function FundProvider({ children }) {
   const [funds, setFunds] = useState();

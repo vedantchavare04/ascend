@@ -32,8 +32,3 @@ const StockStatus = () => {
 };
 
 export default StockStatus;
-
-// NOTE: You need to install react-icons for this to work:
-// npm install react-icons
-// OR
-// yarn add react-icons

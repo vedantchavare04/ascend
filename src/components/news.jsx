@@ -15,10 +15,8 @@ export default function News() {
 ;
   if (!stocks || !stocks.feed) return <p className="no-news">No news found.</p>;
 
-  // helper to parse time_published like: 20251202T165600
   function formatPublished(ts) {
     if (!ts) return "";
-    // Accepts ISO-ish like 20251202T165600 or already ISO
     try {
       if (/^\d{8}T\d{6}$/.test(ts)) {
         const y = ts.slice(0, 4);

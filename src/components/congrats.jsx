@@ -5,7 +5,7 @@ export default function Congrats() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/me", { withCredentials: true })
+    axios.get(`${process.env.VITE_API_URL}/api/me`, { withCredentials: true })
       .then(r => setUser(r.data.user))
       .catch(() => setUser(null));
   }, []);
