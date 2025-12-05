@@ -1,9 +1,8 @@
-// loginstate.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { LoginContext } from "./loginContext.js";
 
-const LOGIN_URL = "http://localhost:4000/api/me";
+const LOGIN_URL = `http://localhost:4000/api/me`;
 
 export default function Authenticate({ children }) {
   const [login, setLogin] = useState(false);
@@ -12,11 +11,10 @@ export default function Authenticate({ children }) {
   const fetchLogin = async () => {
     try {
       const response = await axios.get(LOGIN_URL, {
-        withCredentials: true, // if you're using cookies/sessions
+        withCredentials: true, 
       });
 
-      // Your JSON shape:
-      // { ok: true, user: { ... } }
+
       const { ok, user } = response.data;
 
       setLogin(Boolean(ok));
@@ -30,7 +28,7 @@ export default function Authenticate({ children }) {
 
   useEffect(() => {
     fetchLogin();
-  }, []); // run once
+  }, []); 
 
   return (
     <LoginContext.Provider value={{ login, user }}>
