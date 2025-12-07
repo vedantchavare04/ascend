@@ -162,7 +162,7 @@ body {
 .mobile-link-row{
   display: flex;
   flex-direction: row;
-  gap: 7px;
+  gap: 12px;
   width: 100%;
 }
 .mobile-link {
