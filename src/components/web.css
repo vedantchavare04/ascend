@@ -154,8 +154,8 @@ body {
 
 .mobile-links {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
+  flex-direction: row;
+  gap: 5px;
   width: 100%;
 }
 
