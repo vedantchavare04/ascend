@@ -1,4 +1,3 @@
-// loginstate.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { LoginContext } from "./loginContext.js";
@@ -12,7 +11,7 @@ export default function Authenticate({ children }) {
   const fetchLogin = async () => {
     try {
       const response = await axios.get(LOGIN_URL, {
-        withCredentials: true, // if you're using cookies/sessions
+        withCredentials: true,
       });
 
       // Your JSON shape:
