@@ -84,7 +84,7 @@ export default function NavBart() {
 
 
             <div class="log-center">
-            <a href="http://localhost:4000/auth/google">
+            <a href="=https://ascend-backend-14.onrender.com/auth/google">
             
               <button className="google-btn"><img
                 src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
