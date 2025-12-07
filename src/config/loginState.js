@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { LoginContext } from "./loginContext.js";
 
-const LOGIN_URL = `${process.env.VITE_API_URL}/api/me`;
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/me`;
 
 export default function Authenticate({ children }) {
   const [login, setLogin] = useState(false);
