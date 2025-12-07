@@ -39,7 +39,7 @@ export default function NavBart() {
 
   const handleNav = (path) => {
     navigate(path);
-    setMobileMenuOpen(false); // close mobile menu on navigation
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -49,23 +49,23 @@ export default function NavBart() {
         <div className="nav-inner container">
           {/* Brand */}
           <div className="brand" onClick={() => handleNav("/")}>
-            <img src={image} alt="brand" width="120" />
+            <img src={image} alt="Ascend logo" className="brand-logo" />
           </div>
 
           {/* Desktop links */}
           <div className="nav-links">
-            <a onClick={() => handleNav("/market")} className="nav-link">
+            <button onClick={() => handleNav("/market")} className="nav-link">
               Markets
-            </a>
-            <a onClick={() => handleNav("/funds")} className="nav-link">
+            </button>
+            <button onClick={() => handleNav("/funds")} className="nav-link">
               Mutual Funds
-            </a>
-            <a onClick={() => handleNav("/news")} className="nav-link">
+            </button>
+            <button onClick={() => handleNav("/news")} className="nav-link">
               News
-            </a>
-            <a onClick={() => handleNav("/learn")} className="nav-link">
+            </button>
+            <button onClick={() => handleNav("/learn")} className="nav-link">
               Learn
-            </a>
+            </button>
           </div>
 
           {/* Desktop actions */}
@@ -93,80 +93,77 @@ export default function NavBart() {
           <div className="nav-mobile-toggle">
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              aria-label="Toggle menu"
+              aria-label="Toggle navigation menu"
               className="mobile-toggle-btn"
             >
-              {mobileMenuOpen ? <X /> : <Menu />}
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu">
-            <div className="mobile-links">
-              <a
-                onClick={() => handleNav("/market")}
-                className="mobile-link"
-              >
-                Markets
-              </a>
-              <a
-                onClick={() => handleNav("/funds")}
-                className="mobile-link"
-              >
-                Mutual Funds
-              </a>
-              <a
-                onClick={() => handleNav("/news")}
-                className="mobile-link"
-              >
-                News
-              </a>
-              <a
-                onClick={() => handleNav("/learn")}
-                className="mobile-link"
-              >
-                Learn
-              </a>
+      {/* MOBILE MENU PANEL */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          <div className="mobile-links">
+            <button
+              onClick={() => handleNav("/market")}
+              className="mobile-link"
+            >
+              Markets
+            </button>
+            <button
+              onClick={() => handleNav("/funds")}
+              className="mobile-link"
+            >
+              Mutual Funds
+            </button>
+            <button
+              onClick={() => handleNav("/news")}
+              className="mobile-link"
+            >
+              News
+            </button>
+            <button
+              onClick={() => handleNav("/learn")}
+              className="mobile-link"
+            >
+              Learn
+            </button>
 
-              <hr />
+            <hr />
 
-              {!loading && !login && (
-                <>
-                  <button
-                    className="mobile-login"
-                    onClick={() => {
-                      setShowLogin(true);
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Log in
-                  </button>
-                  <button
-                    className="mobile-cta"
-                    onClick={() => {
-                      setShowLogin(true);
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Get started
-                  </button>
-                </>
-              )}
-
-              {!loading && login && (
+            {!loading && !login && (
+              <>
                 <button
                   className="mobile-login"
-                  onClick={handleLogout}
+                  onClick={() => {
+                    setShowLogin(true);
+                    setMobileMenuOpen(false);
+                  }}
                 >
-                  Logout
+                  Log in
                 </button>
-              )}
-            </div>
+                <button
+                  className="mobile-cta"
+                  onClick={() => {
+                    setShowLogin(true);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  Get started
+                </button>
+              </>
+            )}
+
+            {!loading && login && (
+              <button className="mobile-login" onClick={handleLogout}>
+                Logout
+              </button>
+            )}
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* LOGIN MODAL */}
       {showLogin && !login && (
@@ -188,7 +185,7 @@ export default function NavBart() {
 
             <img
               src={image}
-              alt="brand"
+              alt="Ascend brand"
               className="login-brand"
             />
 
@@ -197,7 +194,6 @@ export default function NavBart() {
             </h2>
             <p className="login-sub">Log in or Sign up</p>
 
-            {/* Phone input row */}
             <div className="phone-input-wrap">
               <div className="country-code">+91</div>
               <input
@@ -207,7 +203,6 @@ export default function NavBart() {
               />
             </div>
 
-            {/* OR + Google login */}
             <div className="log-center">
               <div className="or">
                 <span className="or-text">or</span>
