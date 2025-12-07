@@ -86,11 +86,12 @@ export default function NavBart() {
           {mobileMenuOpen && (
             <div className="mobile-menu">
               <div className="mobile-links-list">
+                <div class="mobile-link-row">
                 <a onClick={() => { navigate("/market"); setMobileMenuOpen(false); }}>Markets</a>
                 <a onClick={() => { navigate("/funds"); setMobileMenuOpen(false); }}>Mutual Funds</a>
                 <a onClick={() => { navigate("/news"); setMobileMenuOpen(false); }}>News</a>
                 <a onClick={() => { navigate("/learn"); setMobileMenuOpen(false); }}>Learn</a>
-                
+                </div>
                 <hr className="mobile-divider" />
                 
                 {/* Mobile Specific Auth Buttons */}
