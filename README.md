@@ -39,6 +39,7 @@ Ascend is a modern investment platform that allows users to invest in stocks, mu
 * **Google OAuth (Passport.js)**
 * **Cookie-based sessions**
 * **CORS**
+* **Note-As backend server is running gon free plan,it needs to activate by one's clicks on the backend link then click on front end.**
 
 ### **Database**
 
