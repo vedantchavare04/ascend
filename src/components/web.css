@@ -152,7 +152,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.mobile-links {
+.mobile-links-list {
   display: flex;
   flex-direction: row;
   gap: 5px;
