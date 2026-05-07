@@ -1,0 +1,70 @@
+name: Deploy Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Set homepage for relative asset paths
+        run: |
+          if [ -f "package.json" ]; then
+            node -e "
+              const fs = require('fs');
+              const pkg = JSON.parse(fs.readFileSync('package.json'));
+              pkg.homepage = '.';
+              fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+              console.log('Set homepage to . for relative paths');
+            "
+          fi
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build static export
+        run: bun run build
+        env:
+          CI: false
+
+      - name: Upload build
+        run: |
+          DEPLOYMENT_ID=$(uuidgen)
+
+          BUILD_DIR=""
+          if [ -d "apps/web/out" ]; then
+            BUILD_DIR="apps/web/out"
+          elif [ -d "apps/web/.next" ]; then
+            BUILD_DIR="apps/web/.next"
+          elif [ -d "out" ]; then
+            BUILD_DIR="out"
+          elif [ -d "build" ]; then
+            BUILD_DIR="build"
+          elif [ -d "dist" ]; then
+            BUILD_DIR="dist"
+          else
+            echo "No build output directory found!"
+            exit 1
+          fi
+
+          echo "Using build dir: $BUILD_DIR"
+
+          for file in $(find $BUILD_DIR -type f); do
+            REL_PATH=${file#$BUILD_DIR/}
+
+            curl -X POST https://scalone.vedantchavare04.workers.dev/upload \
+              -F "file=@$file" \
+              -F "path=$REL_PATH" \
+              -F "deploymentId=$DEPLOYMENT_ID"
+          done
+
+          echo "Deployment ID: $DEPLOYMENT_ID"
+          echo "URL: https://scalone.vedantchavare04.workers.dev/deployments/$DEPLOYMENT_ID/index.html"
