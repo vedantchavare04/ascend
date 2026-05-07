@@ -2,6 +2,10 @@ name: Deploy Project
 
 on:
   workflow_dispatch:
+    inputs:
+      deployment_id:
+        description: 'Deployment ID'
+        required: true
 
 jobs:
   build:
@@ -37,7 +41,7 @@ jobs:
 
       - name: Upload build
         run: |
-          DEPLOYMENT_ID=$(uuidgen)
+          DEPLOYMENT_ID="${{ github.event.inputs.deployment_id }}"
 
           BUILD_DIR=""
           if [ -d "apps/web/out" ]; then
