@@ -39,6 +39,21 @@ jobs:
         env:
           CI: false
 
+      - name: Fix asset paths to be relative
+        run: |
+          BUILD_DIR=""
+          if [ -d "apps/web/out" ]; then BUILD_DIR="apps/web/out"
+          elif [ -d "apps/web/.next" ]; then BUILD_DIR="apps/web/.next"
+          elif [ -d "out" ]; then BUILD_DIR="out"
+          elif [ -d "build" ]; then BUILD_DIR="build"
+          elif [ -d "dist" ]; then BUILD_DIR="dist"
+          else echo "No build output directory found!"; exit 1; fi
+
+          echo "Fixing asset paths in $BUILD_DIR/index.html"
+          sed -i 's|href="/|href="./|g' $BUILD_DIR/index.html
+          sed -i 's|src="/|src="./|g' $BUILD_DIR/index.html
+          echo "Done fixing paths"
+
       - name: Upload build
         run: |
           DEPLOYMENT_ID="${{ github.event.inputs.deployment_id }}"
