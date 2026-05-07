@@ -5,6 +5,7 @@ import Footer from './footer.jsx';
 import ImageMoveLeft from './poster.jsx';
 import ImageMoveRight from './poster2.jsx';
 import { Routes, Route } from "react-router-dom";
+import "../components/home.css"
 import News from './news.jsx';
 import StockProvider from '../config/stockstate.js';
 import Benefit from './benefits.jsx';
