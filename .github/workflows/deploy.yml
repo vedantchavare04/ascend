@@ -12,78 +12,123 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Set homepage for relative asset paths
+      - name: Install and build
         run: |
-          if [ -f "package.json" ]; then
+          set -e
+
+          # Detect package manager
+          if [ -f "bun.lockb" ] || [ -f "bun.lock" ]; then
+            PKG_MGR="bun"
+          elif [ -f "pnpm-lock.yaml" ]; then
+            PKG_MGR="pnpm"
+            npm install -g pnpm
+          elif [ -f "yarn.lock" ]; then
+            PKG_MGR="yarn"
+          else
+            PKG_MGR="npm"
+          fi
+          echo "Using package manager: $PKG_MGR"
+
+          # Install deps
+          if [ "$PKG_MGR" = "bun" ]; then bun install
+          elif [ "$PKG_MGR" = "pnpm" ]; then pnpm install --frozen-lockfile
+          elif [ "$PKG_MGR" = "yarn" ]; then yarn install --frozen-lockfile
+          else npm install
+          fi
+
+          # Patch CRA projects to use relative paths
+          if grep -q '"react-scripts"' package.json 2>/dev/null; then
             node -e "
               const fs = require('fs');
               const pkg = JSON.parse(fs.readFileSync('package.json'));
               pkg.homepage = '.';
               fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
-              console.log('Set homepage to . for relative paths');
+              console.log('Set homepage for CRA');
             "
           fi
 
-      - name: Install dependencies
-        run: bun install
+          # Patch Next.js to static export if needed
+          for cfg in next.config.js next.config.ts next.config.mjs; do
+            if [ -f "$cfg" ]; then
+              if ! grep -q "output" "$cfg"; then
+                node -e "
+                  const fs = require('fs');
+                  let c = fs.readFileSync('$cfg', 'utf8');
+                  c = c.replace(/const nextConfig[^=]*=s*{/, 'const nextConfig = { output: "export", trailingSlash: true,');
+                  fs.writeFileSync('$cfg', c);
+                  console.log('Patched next config for static export');
+                " 2>/dev/null || true
+              fi
+              break
+            fi
+          done
 
-      - name: Build static export
-        run: bun run build
+          # Build
+          if [ "$PKG_MGR" = "bun" ]; then bun run build
+          elif [ "$PKG_MGR" = "pnpm" ]; then pnpm run build
+          elif [ "$PKG_MGR" = "yarn" ]; then yarn build
+          else npm run build
+          fi
         env:
           CI: false
+          NODE_ENV: production
 
-      - name: Fix asset paths to be relative
+      - name: Find build output and fix paths
         run: |
           BUILD_DIR=""
-          if [ -d "apps/web/out" ]; then BUILD_DIR="apps/web/out"
-          elif [ -d "apps/web/.next" ]; then BUILD_DIR="apps/web/.next"
-          elif [ -d "out" ]; then BUILD_DIR="out"
-          elif [ -d "build" ]; then BUILD_DIR="build"
-          elif [ -d "dist" ]; then BUILD_DIR="dist"
-          else echo "No build output directory found!"; exit 1; fi
+          for dir in "apps/web/out" "apps/web/dist" "apps/web/build" "out" "dist" "build" ".next/static"; do
+            if [ -d "$dir" ]; then BUILD_DIR="$dir"; break; fi
+          done
 
-          echo "Fixing asset paths in $BUILD_DIR/index.html"
-          sed -i 's|href="/|href="./|g' $BUILD_DIR/index.html
-          sed -i 's|src="/|src="./|g' $BUILD_DIR/index.html
-          echo "Done fixing paths"
-
-      - name: Upload build
-        run: |
-          DEPLOYMENT_ID="${{ github.event.inputs.deployment_id }}"
-
-          BUILD_DIR=""
-          if [ -d "apps/web/out" ]; then
-            BUILD_DIR="apps/web/out"
-          elif [ -d "apps/web/.next" ]; then
-            BUILD_DIR="apps/web/.next"
-          elif [ -d "out" ]; then
-            BUILD_DIR="out"
-          elif [ -d "build" ]; then
-            BUILD_DIR="build"
-          elif [ -d "dist" ]; then
-            BUILD_DIR="dist"
-          else
-            echo "No build output directory found!"
+          if [ -z "$BUILD_DIR" ]; then
+            echo "ERROR: No build output directory found. Contents:"
+            ls -la
             exit 1
           fi
 
-          echo "Using build dir: $BUILD_DIR"
+          echo "BUILD_DIR=$BUILD_DIR" >> $GITHUB_ENV
+          echo "Found build dir: $BUILD_DIR"
 
-          for file in $(find $BUILD_DIR -type f); do
-            REL_PATH=${file#$BUILD_DIR/}
+          if [ -f "$BUILD_DIR/index.html" ]; then
+            sed -i 's|href="/|href="./|g' "$BUILD_DIR/index.html"
+            sed -i 's|src="/|src="./|g' "$BUILD_DIR/index.html"
+            echo "Fixed asset paths in index.html"
+          fi
 
-            curl -X POST https://scalone.vedantchavare04.workers.dev/upload \
+      - name: Upload build
+        run: |
+          DEPLOYMENT_ID="131d80bd-dd23-467f-952e-7f1c10e0f545"
+          BUILD_DIR="$BUILD_DIR"
+
+          echo "Uploading from: $BUILD_DIR"
+          SUCCESS=0
+          FAIL=0
+
+          find "$BUILD_DIR" -type f | while read file; do
+            REL_PATH="${file#$BUILD_DIR/}"
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://scalone.vedantchavare04.workers.dev/upload \
               -F "file=@$file" \
               -F "path=$REL_PATH" \
-              -F "deploymentId=$DEPLOYMENT_ID"
+              -F "deploymentId=$DEPLOYMENT_ID")
+            if [ "$HTTP_CODE" = "200" ]; then
+              SUCCESS=$((SUCCESS+1))
+            else
+              FAIL=$((FAIL+1))
+              echo "Failed: $REL_PATH (HTTP $HTTP_CODE)"
+            fi
           done
 
-          echo "Deployment ID: $DEPLOYMENT_ID"
-          echo "URL: https://scalone.vedantchavare04.workers.dev/deployments/$DEPLOYMENT_ID/index.html"
+          echo "Done: $SUCCESS uploaded, $FAIL failed"
+          echo "URL: https://scalone.vedantchavare04.workers.dev/deployments/$DEPLOYMENT_ID/"
