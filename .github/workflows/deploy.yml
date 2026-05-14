@@ -41,7 +41,15 @@ jobs:
           fi
           echo "Using package manager: $PKG_MGR"
 
-          # Install deps
+          # Install turbo globally if this is a turborepo
+          IS_TURBO=false
+          if [ -f "turbo.json" ] || grep -q '"turbo"' package.json 2>/dev/null; then
+            IS_TURBO=true
+            echo "Turborepo detected, installing turbo globally..."
+            npm install -g turbo
+          fi
+
+          # Install ALL deps (devDependencies included)
           if [ "$PKG_MGR" = "bun" ]; then bun install
           elif [ "$PKG_MGR" = "pnpm" ]; then pnpm install --frozen-lockfile
           elif [ "$PKG_MGR" = "yarn" ]; then yarn install --frozen-lockfile
@@ -59,8 +67,8 @@ jobs:
             "
           fi
 
-          # Patch Next.js to static export if needed
-          for cfg in next.config.js next.config.ts next.config.mjs; do
+          # Patch Next.js configs to static export if not already set
+          for cfg in next.config.js next.config.ts next.config.mjs apps/web/next.config.js apps/web/next.config.ts apps/web/next.config.mjs; do
             if [ -f "$cfg" ]; then
               if ! grep -q "output" "$cfg"; then
                 node -e "
@@ -68,38 +76,72 @@ jobs:
                   let c = fs.readFileSync('$cfg', 'utf8');
                   c = c.replace(/const nextConfig[^=]*=s*{/, 'const nextConfig = { output: "export", trailingSlash: true,');
                   fs.writeFileSync('$cfg', c);
-                  console.log('Patched next config for static export');
+                  console.log('Patched ' + '$cfg' + ' for static export');
                 " 2>/dev/null || true
               fi
+            fi
+          done
+
+          # Build — for turborepo only build the web app and its deps
+          if [ "$IS_TURBO" = "true" ]; then
+            echo "Building with turbo --filter=web..."
+            if [ "$PKG_MGR" = "pnpm" ]; then
+              pnpm exec turbo run build --filter=web...
+            elif [ "$PKG_MGR" = "bun" ]; then
+              npx turbo run build --filter=web...
+            elif [ "$PKG_MGR" = "yarn" ]; then
+              npx turbo run build --filter=web...
+            else
+              npx turbo run build --filter=web...
+            fi
+          else
+            echo "Building normally..."
+            if [ "$PKG_MGR" = "bun" ]; then bun run build
+            elif [ "$PKG_MGR" = "pnpm" ]; then pnpm run build
+            elif [ "$PKG_MGR" = "yarn" ]; then yarn build
+            else npm run build
+            fi
+          fi
+        env:
+          CI: false
+
+      - name: Find build output and fix paths
+        run: |
+          echo "=== Searching for build output ==="
+          echo "Root contents:"
+          ls -la
+
+          echo "apps/ contents:"
+          ls -la apps/ 2>/dev/null || echo "no apps/ dir"
+
+          echo "apps/web/ contents:"
+          ls -la apps/web/ 2>/dev/null || echo "no apps/web/ dir"
+
+          BUILD_DIR=""
+          for dir in apps/web/out apps/web/dist apps/web/build apps/web/.next out dist build; do
+            if [ -d "$dir" ]; then
+              BUILD_DIR="$dir"
+              echo "Found build dir: $BUILD_DIR"
               break
             fi
           done
 
-          # Build
-          if [ "$PKG_MGR" = "bun" ]; then bun run build
-          elif [ "$PKG_MGR" = "pnpm" ]; then pnpm run build
-          elif [ "$PKG_MGR" = "yarn" ]; then yarn build
-          else npm run build
+          # Fallback: find index.html anywhere under apps/
+          if [ -z "$BUILD_DIR" ]; then
+            echo "Fallback: searching for index.html under apps/..."
+            FOUND=$(find apps -name "index.html" -not -path "*/node_modules/*" 2>/dev/null | head -1)
+            if [ -n "$FOUND" ]; then
+              BUILD_DIR=$(dirname "$FOUND")
+              echo "Found via index.html search: $BUILD_DIR"
+            fi
           fi
-        env:
-          CI: false
-          NODE_ENV: production
-
-      - name: Find build output and fix paths
-        run: |
-          BUILD_DIR=""
-          for dir in "apps/web/out" "apps/web/dist" "apps/web/build" "out" "dist" "build" ".next/static"; do
-            if [ -d "$dir" ]; then BUILD_DIR="$dir"; break; fi
-          done
 
           if [ -z "$BUILD_DIR" ]; then
-            echo "ERROR: No build output directory found. Contents:"
-            ls -la
+            echo "ERROR: No build output directory found."
             exit 1
           fi
 
           echo "BUILD_DIR=$BUILD_DIR" >> $GITHUB_ENV
-          echo "Found build dir: $BUILD_DIR"
 
           if [ -f "$BUILD_DIR/index.html" ]; then
             sed -i 's|href="/|href="./|g' "$BUILD_DIR/index.html"
@@ -109,7 +151,7 @@ jobs:
 
       - name: Upload build
         run: |
-          DEPLOYMENT_ID="dc3d8446-dd12-4d82-b796-79188de47476"
+          DEPLOYMENT_ID="17dfc862-2b4f-4239-bb96-4291fdbf3a5b"
           BUILD_DIR="$BUILD_DIR"
 
           echo "Uploading from: $BUILD_DIR"
