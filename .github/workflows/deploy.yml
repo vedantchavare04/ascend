@@ -41,7 +41,6 @@ jobs:
           fi
           echo "Using package manager: $PKG_MGR"
 
-          # Install turbo globally if this is a turborepo
           IS_TURBO=false
           if [ -f "turbo.json" ] || grep -q '"turbo"' package.json 2>/dev/null; then
             IS_TURBO=true
@@ -49,14 +48,12 @@ jobs:
             npm install -g turbo
           fi
 
-          # Install ALL deps (devDependencies included)
           if [ "$PKG_MGR" = "bun" ]; then bun install
           elif [ "$PKG_MGR" = "pnpm" ]; then pnpm install --frozen-lockfile
           elif [ "$PKG_MGR" = "yarn" ]; then yarn install --frozen-lockfile
           else npm install
           fi
 
-          # Patch CRA projects to use relative paths
           if grep -q '"react-scripts"' package.json 2>/dev/null; then
             node -e "
               const fs = require('fs');
@@ -67,7 +64,6 @@ jobs:
             "
           fi
 
-          # Patch Next.js configs to static export if not already set
           for cfg in next.config.js next.config.ts next.config.mjs apps/web/next.config.js apps/web/next.config.ts apps/web/next.config.mjs; do
             if [ -f "$cfg" ]; then
               if ! grep -q "output" "$cfg"; then
@@ -82,7 +78,6 @@ jobs:
             fi
           done
 
-          # Build — for turborepo only build the web app and its deps
           if [ "$IS_TURBO" = "true" ]; then
             echo "Building with turbo --filter=web..."
             if [ "$PKG_MGR" = "pnpm" ]; then
@@ -126,7 +121,6 @@ jobs:
             fi
           done
 
-          # Fallback: find index.html anywhere under apps/
           if [ -z "$BUILD_DIR" ]; then
             echo "Fallback: searching for index.html under apps/..."
             FOUND=$(find apps -name "index.html" -not -path "*/node_modules/*" 2>/dev/null | head -1)
@@ -151,7 +145,7 @@ jobs:
 
       - name: Upload build
         run: |
-          DEPLOYMENT_ID="17dfc862-2b4f-4239-bb96-4291fdbf3a5b"
+          DEPLOYMENT_ID="f46696de-1ac4-43ff-9f3f-0ff08d4baa46"
           BUILD_DIR="$BUILD_DIR"
 
           echo "Uploading from: $BUILD_DIR"
