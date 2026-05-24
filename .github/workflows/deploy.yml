@@ -145,7 +145,7 @@ jobs:
 
       - name: Upload build
         run: |
-          DEPLOYMENT_ID="f8da8833-a19c-4887-9192-6b0ee0d54973"
+          DEPLOYMENT_ID="5b905278-d94d-41c5-96d7-7153f6dcc371"
           BUILD_DIR="$BUILD_DIR"
 
           echo "Uploading from: $BUILD_DIR"
